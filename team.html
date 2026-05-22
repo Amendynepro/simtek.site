@@ -168,7 +168,7 @@
         .team-container { max-width: 1600px; margin: 0 auto; padding: 60px 20px; }
         .section-title { font-size: 36px; text-align: center; margin-bottom: 40px; background: linear-gradient(135deg, #ff1a75 0%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .leadership-grid { display: grid; grid-template-columns: repeat(2, 400px); gap: 25px; margin-bottom: 80px; justify-content: center; align-items: stretch; }
-        .person-card { background: rgba(26, 26, 62, 0.6); border: 2px solid rgba(255, 26, 117, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; max-width: 400px; display: flex; flex-direction: column; }
+        .person-card { background: rgba(26, 26, 62, 0.6); border: 2px solid rgba(255, 26, 117, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; max-width: 400px; }
         .person-card:hover { transform: translateY(-5px); border-color: #ff1a75; box-shadow: 0 15px 30px rgba(255, 26, 117, 0.3); }
         .person-header-inline { 
             display: flex; 
@@ -196,7 +196,7 @@
         .person-header-info { flex: 1; position: relative; z-index: 1; }
         .person-role-badge { background: linear-gradient(135deg, #ff1a75 0%, #00d4ff 100%); padding: 4px 12px; border-radius: 12px; font-size: 9px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 5px; }
         .person-name { font-size: 18px; font-weight: bold; color: #ff1a75; }
-        .person-info-details { padding: 20px; flex: 1; }
+        .person-info-details { padding: 20px; }
         .person-specs { display: grid; gap: 8px; }
         .spec-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255, 26, 117, 0.1); }
         .spec-label { color: #b0b0d0; text-transform: uppercase; font-size: 10px; }
@@ -438,7 +438,7 @@
         
         @media (max-width: 768px) {
             .directors-grid, .teams-columns-grid {
-                grid-template-columns: 1fr;
+                display: none !important;
             }
             .directors-grid {
                 display: none;
@@ -474,16 +474,19 @@
 
             .mobile-stack {
                 display: none;
-                position: relative;
+                flex-direction: column;
+                gap: 10px;
                 margin: 0 15px 20px;
+                padding-bottom: 10px;
+            }
+            .mobile-stack.open {
+                display: flex !important;
             }
 
-            .mobile-stack.open { display: block; }
+            
 
             .mobile-mini-card {
-                position: absolute;
-                left: 0;
-                right: 0;
+                position: relative;
                 height: 70px;
                 border: 2px solid;
                 border-radius: 12px;
@@ -688,11 +691,14 @@
         }
         .license-badge {
             display: inline-flex;
+            align-items: center;
             border-radius: 6px;
             overflow: hidden;
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.8px;
+            flex-shrink: 0;
+            height: 20px;
         }
         .lb-type {
             padding: 3px 6px;
@@ -1217,6 +1223,7 @@
 <img class="person-photo-circle" src="pilot-GT3B-2.webp" width="200" height="200"/>
 <div class="person-header-info">
 <div class="person-role-badge">PILOTE</div>
+<div class="person-role-badge" style="background: rgba(255,255,255,0.12); color: #ffffff; border: 1px solid rgba(255,255,255,0.35); -webkit-text-fill-color: #ffffff;">INGÉNIEUR TECHNIQUE</div>
 <h3 class="person-name">Maceo.R</h3>
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
@@ -1748,9 +1755,6 @@
                 if (!col) return;
 
                 const cards = Array.from(col.querySelectorAll('.team-leader, .person-card'));
-                const extraGap = 20;
-                const stackHeight = (cards.length - 1) * spacing + 70 + extraGap;
-
                 const folder = document.createElement('div');
                 folder.className = 'mobile-folder';
                 folder.style.borderColor = team.color;
@@ -1762,7 +1766,7 @@
 
                 const stack = document.createElement('div');
                 stack.className = 'mobile-stack';
-                stack.style.height = stackHeight + 'px';
+
 
                 cards.forEach((card, i) => {
                     const name  = card.querySelector('.person-name')?.textContent || '';
@@ -1774,8 +1778,7 @@
                     const mini = document.createElement('div');
                     mini.className = 'mobile-mini-card';
                     mini.style.borderColor = team.color + '55';
-                    mini.style.top = (i * spacing + (i >= 1 ? extraGap : 0)) + 'px';
-                    mini.style.zIndex = cards.length - i;
+                    mini.style.position = 'relative';
                     mini.innerHTML = `
                         <img src="${photo}" class="mini-photo" style="border-color:${team.color}88">
                         <div style="flex:1;min-width:0;">
