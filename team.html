@@ -275,7 +275,7 @@
             padding: 8px;
             background: rgba(10, 14, 39, 0.8);
         }
-        .setup-modal-close { 
+        .setup-info-close { 
             position: absolute; 
             top: -50px; 
             right: 0; 
@@ -293,7 +293,7 @@
             transition: all 0.3s;
             z-index: 10001;
         }
-        .setup-modal-close:hover { 
+        .setup-info-close:hover { 
             background: #ff3388; 
             transform: rotate(90deg);
         }
@@ -801,18 +801,18 @@
             background: rgba(255,26,117,0.1);
             border-color: #ff1a75;
         }
-        .setup-modal-overlay {
+        .setup-info-overlay {
             display: none;
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.85);
-            z-index: 2000;
+            z-index: 20000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .setup-modal-overlay.active { display: flex; }
-        .setup-modal-box {
+        .setup-info-overlay.active { display: flex; }
+        .setup-info-box {
             background: linear-gradient(135deg, #0f1235, #1a1a3e);
             border: 1px solid rgba(255,26,117,0.4);
             border-radius: 20px;
@@ -823,7 +823,7 @@
             padding: 32px;
             position: relative;
         }
-        .setup-modal-close {
+        .setup-info-close {
             position: absolute;
             top: 16px;
             right: 20px;
@@ -835,20 +835,20 @@
             line-height: 1;
             transition: color 0.2s;
         }
-        .setup-modal-close:hover { color: #ff1a75; }
-        .setup-modal-title {
+        .setup-info-close:hover { color: #ff1a75; }
+        .setup-info-title {
             font-size: 22px;
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
         }
-        .setup-modal-subtitle {
+        .setup-info-subtitle {
             font-size: 13px;
             color: #888;
             margin-bottom: 24px;
         }
-        .setup-modal-section { margin-bottom: 20px; }
-        .setup-modal-section h4 {
+        .setup-info-section { margin-bottom: 20px; }
+        .setup-info-section h4 {
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -857,8 +857,8 @@
             border-bottom: 1px solid rgba(255,26,117,0.2);
             padding-bottom: 6px;
         }
-        .setup-modal-section ul { list-style: none; padding: 0; }
-        .setup-modal-section li {
+        .setup-info-section ul { list-style: none; padding: 0; }
+        .setup-info-section li {
             display: flex;
             justify-content: space-between;
             padding: 7px 0;
@@ -866,8 +866,8 @@
             font-size: 14px;
             color: #d1d1e9;
         }
-        .setup-modal-section li strong { color: #888; font-weight: 500; }
-        .setup-modal-img {
+        .setup-info-section li strong { color: #888; font-weight: 500; }
+        .setup-info-img {
             width: 100%;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -875,7 +875,7 @@
             max-height: 200px;
             object-fit: cover;
         }
-        .setup-modal-coming {
+        .setup-info-coming {
             color: #555;
             font-style: italic;
             font-size: 13px;
@@ -994,7 +994,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g2">G2</span></span>
 
-<button class="setup-btn" data-pilot="romuald" onclick="openSetupModal('romuald', 'Romuald.D')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="romuald" onclick="openSetupInfo('romuald', 'Romuald.D')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1018,7 +1018,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
 
-<button class="setup-btn" data-pilot="thibault" onclick="openSetupModal('thibault', 'Thibault.C')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="thibault" onclick="openSetupInfo('thibault', 'Thibault.C')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1042,7 +1042,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g2">G2</span></span>
 
-<button class="setup-btn" data-pilot="maxime" onclick="openSetupModal('maxime', 'Maxime')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="maxime" onclick="openSetupInfo('maxime', 'Maxime')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1088,7 +1088,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
 
-<button class="setup-btn" data-pilot="clement" onclick="openSetupModal('clement', 'Clement')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="clement" onclick="openSetupInfo('clement', 'Clement')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1112,7 +1112,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p2">P2</span></span>
 
-<button class="setup-btn" data-pilot="hugo-r" onclick="openSetupModal('hugo-r', 'Hugo.R')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="hugo-r" onclick="openSetupInfo('hugo-r', 'Hugo.R')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1144,7 +1144,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-s2">S2</span></span>
 
-<button class="setup-btn" data-pilot="anthony-m" onclick="openSetupModal('anthony-m', 'Anthony.M')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="anthony-m" onclick="openSetupInfo('anthony-m', 'Anthony.M')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1170,7 +1170,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
 
-<button class="setup-btn" data-pilot="anthony-d" onclick="openSetupModal('anthony-d', 'Anthony.D')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="anthony-d" onclick="openSetupInfo('anthony-d', 'Anthony.D')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1197,7 +1197,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
 
-<button class="setup-btn" data-pilot="hugo-s" onclick="openSetupModal('hugo-s', 'Hugo.S')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="hugo-s" onclick="openSetupInfo('hugo-s', 'Hugo.S')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1221,7 +1221,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
 
-<button class="setup-btn" data-pilot="maceo" onclick="openSetupModal('maceo', 'Maceo.R')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="maceo" onclick="openSetupInfo('maceo', 'Maceo.R')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1245,7 +1245,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-b2">B2</span></span>
 
-<button class="setup-btn" data-pilot="enzo" onclick="openSetupModal('enzo', 'Enzo')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="enzo" onclick="openSetupInfo('enzo', 'Enzo')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1269,7 +1269,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b2">B2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-s1">S1</span></span>
 
-<button class="setup-btn" data-pilot="cyrille" onclick="openSetupModal('cyrille', 'Cyrille')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="cyrille" onclick="openSetupInfo('cyrille', 'Cyrille')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1325,7 +1325,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s3">S3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p2">P2</span></span>
 
-<button class="setup-btn" data-pilot="florent" onclick="openSetupModal('florent', 'Florent.L')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="florent" onclick="openSetupInfo('florent', 'Florent.L')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1349,7 +1349,7 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
 
-<button class="setup-btn" data-pilot="denis" onclick="openSetupModal('denis', 'Denis')">🎮 Son Setup</button>
+<button class="setup-btn" data-pilot="denis" onclick="openSetupInfo('denis', 'Denis')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1372,7 +1372,7 @@
     
     <div class="setup-modal" id="setupModal">
         <div class="setup-modal-content">
-            <button class="setup-modal-close" onclick="closeSetupModal()">×</button>
+            <button class="setup-info-close" onclick="closeOriginalModal()">×</button>
             <div id="setupCardContent"></div>
         </div>
     </div>
@@ -1494,15 +1494,15 @@
             document.body.style.overflow = 'hidden';
         }
         
-        function closeSetupModal() {
+        function closeOriginalModal() {
             const modal = document.getElementById('setupModal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
         
-        document.getElementById('setupModal').addEventListener('click', function(e) {
+        document.getElementById('setupModal').addEventListener('click', function(e) { if (e.target === document.getElementById('setupModal')) closeOriginalModal(); }); //  function(e) {
             if (e.target === this) {
-                closeSetupModal();
+                closeSetupInfo();
             }
         });
         
@@ -1812,10 +1812,10 @@
     </script>
 
     <!-- Setup Modal -->
-    <div class="setup-modal-overlay" id="setupModalOverlay" onclick="closeSetupModal(event)">
-        <div class="setup-modal-box" id="setupModalBox">
-            <button class="setup-modal-close" onclick="closeSetupModal()">✕</button>
-            <div id="setupModalContent">
+    <div class="setup-info-overlay" id="setupInfoOverlay" onclick="closeSetupModal(event)">
+        <div class="setup-info-box" id="setupInfoBox">
+            <button class="setup-info-close" onclick="closeSetupInfo()">✕</button>
+            <div id="setupInfoContent">
                 <p style="color:#888;text-align:center;padding:40px 0;">Chargement...</p>
             </div>
         </div>
@@ -1825,10 +1825,10 @@
         // Setup Modal
         let _setupCache = null;
 
-        async function openSetupModal(slug, name) {
-            document.getElementById('setupModalOverlay').classList.add('active');
+        async function openSetupInfo(slug, name) {
+            document.getElementById('setupInfoOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
-            document.getElementById('setupModalContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Chargement...</p>';
+            document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Chargement...</p>';
 
             try {
                 if (!_setupCache) {
@@ -1840,7 +1840,7 @@
 
                 const h3 = _setupCache.getElementById('setup-' + slug);
                 if (!h3) {
-                    document.getElementById('setupModalContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Setup non disponible.</p>';
+                    document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Setup non disponible.</p>';
                     return;
                 }
 
@@ -1849,11 +1849,11 @@
                 const img = card.querySelector('img');
                 const sections = card.querySelectorAll('.setup-section');
 
-                let html = `<div class="setup-modal-title">🎮 Setup ${name}</div>`;
-                html += `<div class="setup-modal-subtitle">${subtitle}</div>`;
+                let html = `<div class="setup-info-title">🎮 Setup ${name}</div>`;
+                html += `<div class="setup-info-subtitle">${subtitle}</div>`;
 
                 if (img) {
-                    html += `<img class="setup-modal-img" src="${img.getAttribute('src')}" alt="${img.getAttribute('alt') || ''}" onerror="this.style.display='none'">`;
+                    html += `<img class="setup-info-img" src="${img.getAttribute('src')}" alt="${img.getAttribute('alt') || ''}" onerror="this.style.display='none'">`;
                 }
 
                 sections.forEach(section => {
@@ -1861,9 +1861,9 @@
                     const items = section.querySelectorAll('li');
                     const coming = section.querySelector('.coming-soon');
                     
-                    html += `<div class="setup-modal-section"><h4>${title}</h4>`;
+                    html += `<div class="setup-info-section"><h4>${title}</h4>`;
                     if (coming) {
-                        html += `<p class="setup-modal-coming">À venir</p>`;
+                        html += `<p class="setup-info-coming">À venir</p>`;
                     } else {
                         html += '<ul>';
                         items.forEach(li => {
@@ -1876,21 +1876,21 @@
                     html += '</div>';
                 });
 
-                document.getElementById('setupModalContent').innerHTML = html;
+                document.getElementById('setupInfoContent').innerHTML = html;
             } catch(e) {
-                document.getElementById('setupModalContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Impossible de charger le setup.</p>';
+                document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Impossible de charger le setup.</p>';
             }
         }
 
-        function closeSetupModal(e) {
-            if (e && e.target !== document.getElementById('setupModalOverlay')) return;
-            document.getElementById('setupModalOverlay').classList.remove('active');
+        function closeSetupInfo(e) {
+            if (e && e.target !== document.getElementById('setupInfoOverlay')) return;
+            document.getElementById('setupInfoOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
-                document.getElementById('setupModalOverlay').classList.remove('active');
+                document.getElementById('setupInfoOverlay').classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
