@@ -167,7 +167,7 @@
         .hero-subtitle { font-size: 20px; color: #b0b0d0; }
         .team-container { max-width: 1600px; margin: 0 auto; padding: 60px 20px; }
         .section-title { font-size: 36px; text-align: center; margin-bottom: 40px; background: linear-gradient(135deg, #ff1a75 0%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .leadership-grid { display: grid; grid-template-columns: repeat(2, 400px); gap: 25px; margin-bottom: 80px; justify-content: center; align-items: stretch; }
+        .leadership-grid { display: grid; grid-template-columns: repeat(2, 400px); gap: 25px; margin-bottom: 80px; justify-content: center; }
         .person-card { background: rgba(26, 26, 62, 0.6); border: 2px solid rgba(255, 26, 117, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; max-width: 400px; }
         .person-card:hover { transform: translateY(-5px); border-color: #ff1a75; box-shadow: 0 15px 30px rgba(255, 26, 117, 0.3); }
         .person-header-inline { 
@@ -213,8 +213,7 @@
         .team-leader .person-role-badge { background: linear-gradient(135deg, #00d4ff 0%, #0088ff 100%); }
         .team-leader .person-header-inline { flex-direction: column; text-align: center; }
         .team-leader .person-name { text-align: center; }
-        .pilots-grid { display: grid; grid-template-columns: repeat(3, 400px); gap: 20px; margin-bottom: 20px; justify-content: center;     align-items: stretch;
-        }
+        .pilots-grid { display: grid; grid-template-columns: repeat(3, 400px); gap: 20px; margin-bottom: 20px; justify-content: center; }
         .category-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
         .category-content.active { max-height: 15000px; }
         footer { background: rgba(10, 14, 39, 0.95); padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255, 26, 117, 0.2); }
@@ -252,7 +251,6 @@
             max-width: none;
             width: 100%;
             margin: 0;
-            height: auto;
         }
         .setup-photo-container {
             width: 100%;
@@ -276,7 +274,7 @@
             padding: 8px;
             background: rgba(10, 14, 39, 0.8);
         }
-        .setup-info-close { 
+        .setup-modal-close { 
             position: absolute; 
             top: -50px; 
             right: 0; 
@@ -294,7 +292,7 @@
             transition: all 0.3s;
             z-index: 10001;
         }
-        .setup-info-close:hover { 
+        .setup-modal-close:hover { 
             background: #ff3388; 
             transform: rotate(90deg);
         }
@@ -320,7 +318,6 @@
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
-            align-items: stretch;
         }
         
         .teams-columns-grid {
@@ -438,7 +435,7 @@
         
         @media (max-width: 768px) {
             .directors-grid, .teams-columns-grid {
-                display: none !important;
+                grid-template-columns: 1fr;
             }
             .directors-grid {
                 display: none;
@@ -474,19 +471,16 @@
 
             .mobile-stack {
                 display: none;
-                flex-direction: column;
-                gap: 10px;
+                position: relative;
                 margin: 0 15px 20px;
-                padding-bottom: 10px;
-            }
-            .mobile-stack.open {
-                display: flex !important;
             }
 
-            
+            .mobile-stack.open { display: block; }
 
             .mobile-mini-card {
-                position: relative;
+                position: absolute;
+                left: 0;
+                right: 0;
                 height: 70px;
                 border: 2px solid;
                 border-radius: 12px;
@@ -691,14 +685,11 @@
         }
         .license-badge {
             display: inline-flex;
-            align-items: center;
             border-radius: 6px;
             overflow: hidden;
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.8px;
-            flex-shrink: 0;
-            height: 20px;
         }
         .lb-type {
             padding: 3px 6px;
@@ -785,110 +776,6 @@
             .internal-links-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
         }
 
-
-        /* ── Setup Modal ── */
-        .setup-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: transparent;
-            color: #ff1a75;
-            border: 1px solid rgba(255,26,117,0.4);
-            border-radius: 20px;
-            padding: 5px 14px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.25s;
-            margin: 0 16px 14px;
-        }
-        .setup-btn:hover {
-            background: rgba(255,26,117,0.1);
-            border-color: #ff1a75;
-        }
-        .setup-info-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 20000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .setup-info-overlay.active { display: flex; }
-        .setup-info-box {
-            background: linear-gradient(135deg, #0f1235, #1a1a3e);
-            border: 1px solid rgba(255,26,117,0.4);
-            border-radius: 20px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 32px;
-            position: relative;
-        }
-        .setup-info-close {
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            background: transparent;
-            border: none;
-            color: #888;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-        .setup-info-close:hover { color: #ff1a75; }
-        .setup-info-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        .setup-info-subtitle {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 24px;
-        }
-        .setup-info-section { margin-bottom: 20px; }
-        .setup-info-section h4 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ff1a75;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255,26,117,0.2);
-            padding-bottom: 6px;
-        }
-        .setup-info-section ul { list-style: none; padding: 0; }
-        .setup-info-section li {
-            display: flex;
-            justify-content: space-between;
-            padding: 7px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 14px;
-            color: #d1d1e9;
-        }
-        .setup-info-section li strong { color: #888; font-weight: 500; }
-        .setup-info-img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: block;
-            max-height: 200px;
-            object-fit: cover;
-        }
-        .setup-info-coming {
-            color: #555;
-            font-style: italic;
-            font-size: 13px;
-            padding: 8px 0;
-        }
-
     </style>
 </head>
 
@@ -944,7 +831,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
-
 </div>
 </div>
 </div>
@@ -966,7 +852,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g3">G3</span></span>
-
 </div>
 </div>
 </div>
@@ -1000,8 +885,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g2">G2</span></span>
-
-<button class="setup-btn" data-pilot="romuald" onclick="openSetupInfo('romuald', 'Romuald.D')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1024,8 +907,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
-
-<button class="setup-btn" data-pilot="thibault" onclick="openSetupInfo('thibault', 'Thibault.C')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1048,8 +929,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g2">G2</span></span>
-
-<button class="setup-btn" data-pilot="maxime" onclick="openSetupInfo('maxime', 'Maxime')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1094,8 +973,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
-
-<button class="setup-btn" data-pilot="clement" onclick="openSetupInfo('clement', 'Clement')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1118,8 +995,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p2">P2</span></span>
-
-<button class="setup-btn" data-pilot="hugo-r" onclick="openSetupInfo('hugo-r', 'Hugo.R')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1150,8 +1025,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-s2">S2</span></span>
-
-<button class="setup-btn" data-pilot="anthony-m" onclick="openSetupInfo('anthony-m', 'Anthony.M')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1176,8 +1049,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
-
-<button class="setup-btn" data-pilot="anthony-d" onclick="openSetupInfo('anthony-d', 'Anthony.D')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1203,8 +1074,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
-
-<button class="setup-btn" data-pilot="hugo-s" onclick="openSetupInfo('hugo-s', 'Hugo.S')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1223,13 +1092,10 @@
 <img class="person-photo-circle" src="pilot-GT3B-2.webp" width="200" height="200"/>
 <div class="person-header-info">
 <div class="person-role-badge">PILOTE</div>
-<div class="person-role-badge" style="background: rgba(255,255,255,0.12); color: #ffffff; border: 1px solid rgba(255,255,255,0.35); -webkit-text-fill-color: #ffffff;">INGÉNIEUR TECHNIQUE</div>
 <h3 class="person-name">Maceo.R</h3>
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
-
-<button class="setup-btn" data-pilot="maceo" onclick="openSetupInfo('maceo', 'Maceo.R')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1252,8 +1118,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-b2">B2</span></span>
-
-<button class="setup-btn" data-pilot="enzo" onclick="openSetupInfo('enzo', 'Enzo')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1276,8 +1140,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b2">B2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-s1">S1</span></span>
-
-<button class="setup-btn" data-pilot="cyrille" onclick="openSetupInfo('cyrille', 'Cyrille')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1332,8 +1194,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s3">S3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p2">P2</span></span>
-
-<button class="setup-btn" data-pilot="florent" onclick="openSetupInfo('florent', 'Florent.L')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1356,8 +1216,6 @@
 <div class="license-badges">
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-b3">B3</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p1">P1</span></span>
-
-<button class="setup-btn" data-pilot="denis" onclick="openSetupInfo('denis', 'Denis')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -1380,7 +1238,7 @@
     
     <div class="setup-modal" id="setupModal">
         <div class="setup-modal-content">
-            <button class="setup-info-close" onclick="closeOriginalModal()">×</button>
+            <button class="setup-modal-close" onclick="closeSetupModal()">×</button>
             <div id="setupCardContent"></div>
         </div>
     </div>
@@ -1502,15 +1360,15 @@
             document.body.style.overflow = 'hidden';
         }
         
-        function closeOriginalModal() {
+        function closeSetupModal() {
             const modal = document.getElementById('setupModal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
         
-        document.getElementById('setupModal').addEventListener('click', function(e) { if (e.target === document.getElementById('setupModal')) closeOriginalModal(); }); //  function(e) {
+        document.getElementById('setupModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeSetupInfo();
+                closeSetupModal();
             }
         });
         
@@ -1755,6 +1613,9 @@
                 if (!col) return;
 
                 const cards = Array.from(col.querySelectorAll('.team-leader, .person-card'));
+                const extraGap = 20;
+                const stackHeight = (cards.length - 1) * spacing + 70 + extraGap;
+
                 const folder = document.createElement('div');
                 folder.className = 'mobile-folder';
                 folder.style.borderColor = team.color;
@@ -1766,7 +1627,7 @@
 
                 const stack = document.createElement('div');
                 stack.className = 'mobile-stack';
-
+                stack.style.height = stackHeight + 'px';
 
                 cards.forEach((card, i) => {
                     const name  = card.querySelector('.person-name')?.textContent || '';
@@ -1778,7 +1639,8 @@
                     const mini = document.createElement('div');
                     mini.className = 'mobile-mini-card';
                     mini.style.borderColor = team.color + '55';
-                    mini.style.position = 'relative';
+                    mini.style.top = (i * spacing + (i >= 1 ? extraGap : 0)) + 'px';
+                    mini.style.zIndex = cards.length - i;
                     mini.innerHTML = `
                         <img src="${photo}" class="mini-photo" style="border-color:${team.color}88">
                         <div style="flex:1;min-width:0;">
@@ -1814,92 +1676,6 @@
 
         buildMobileView();
     </script>
-
-    <!-- Setup Modal -->
-    <div class="setup-info-overlay" id="setupInfoOverlay" onclick="closeSetupModal(event)">
-        <div class="setup-info-box" id="setupInfoBox">
-            <button class="setup-info-close" onclick="closeSetupInfo()">✕</button>
-            <div id="setupInfoContent">
-                <p style="color:#888;text-align:center;padding:40px 0;">Chargement...</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Setup Modal
-        let _setupCache = null;
-
-        async function openSetupInfo(slug, name) {
-            document.getElementById('setupInfoOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Chargement...</p>';
-
-            try {
-                if (!_setupCache) {
-                    const res = await fetch('our-setups.html');
-                    const html = await res.text();
-                    const parser = new DOMParser();
-                    _setupCache = parser.parseFromString(html, 'text/html');
-                }
-
-                const h3 = _setupCache.getElementById('setup-' + slug);
-                if (!h3) {
-                    document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Setup non disponible.</p>';
-                    return;
-                }
-
-                const card = h3.closest('.setup-card');
-                const subtitle = card.querySelector('.setup-owner')?.textContent || '';
-                const img = card.querySelector('img');
-                const sections = card.querySelectorAll('.setup-section');
-
-                let html = `<div class="setup-info-title">🎮 Setup ${name}</div>`;
-                html += `<div class="setup-info-subtitle">${subtitle}</div>`;
-
-                if (img) {
-                    html += `<img class="setup-info-img" src="${img.getAttribute('src')}" alt="${img.getAttribute('alt') || ''}" onerror="this.style.display='none'">`;
-                }
-
-                sections.forEach(section => {
-                    const title = section.querySelector('h4')?.textContent || '';
-                    const items = section.querySelectorAll('li');
-                    const coming = section.querySelector('.coming-soon');
-                    
-                    html += `<div class="setup-info-section"><h4>${title}</h4>`;
-                    if (coming) {
-                        html += `<p class="setup-info-coming">À venir</p>`;
-                    } else {
-                        html += '<ul>';
-                        items.forEach(li => {
-                            const strong = li.querySelector('strong')?.textContent || '';
-                            const val = li.textContent.replace(strong, '').trim();
-                            html += `<li><strong>${strong}</strong><span>${val}</span></li>`;
-                        });
-                        html += '</ul>';
-                    }
-                    html += '</div>';
-                });
-
-                document.getElementById('setupInfoContent').innerHTML = html;
-            } catch(e) {
-                document.getElementById('setupInfoContent').innerHTML = '<p style="color:#888;text-align:center;padding:40px 0;">Impossible de charger le setup.</p>';
-            }
-        }
-
-        function closeSetupInfo(e) {
-            if (e && e.target !== document.getElementById('setupInfoOverlay')) return;
-            document.getElementById('setupInfoOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                document.getElementById('setupInfoOverlay').classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-    </script>
-
 </body>
 </html>
 
