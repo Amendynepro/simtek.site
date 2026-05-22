@@ -168,7 +168,7 @@
         .team-container { max-width: 1600px; margin: 0 auto; padding: 60px 20px; }
         .section-title { font-size: 36px; text-align: center; margin-bottom: 40px; background: linear-gradient(135deg, #ff1a75 0%, #00d4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .leadership-grid { display: grid; grid-template-columns: repeat(2, 400px); gap: 25px; margin-bottom: 80px; justify-content: center; }
-        .person-card { background: rgba(26, 26, 62, 0.6); border: 2px solid rgba(255, 26, 117, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; max-width: 400px; }
+        .person-card { background: rgba(26, 26, 62, 0.6); border: 2px solid rgba(255, 26, 117, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; max-width: 400px; display: flex; flex-direction: column; height: 100%; }
         .person-card:hover { transform: translateY(-5px); border-color: #ff1a75; box-shadow: 0 15px 30px rgba(255, 26, 117, 0.3); }
         .person-header-inline { 
             display: flex; 
@@ -196,7 +196,7 @@
         .person-header-info { flex: 1; position: relative; z-index: 1; }
         .person-role-badge { background: linear-gradient(135deg, #ff1a75 0%, #00d4ff 100%); padding: 4px 12px; border-radius: 12px; font-size: 9px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 5px; }
         .person-name { font-size: 18px; font-weight: bold; color: #ff1a75; }
-        .person-info-details { padding: 20px; }
+        .person-info-details { padding: 20px; flex: 1; }
         .person-specs { display: grid; gap: 8px; }
         .spec-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255, 26, 117, 0.1); }
         .spec-label { color: #b0b0d0; text-transform: uppercase; font-size: 10px; }
@@ -213,7 +213,8 @@
         .team-leader .person-role-badge { background: linear-gradient(135deg, #00d4ff 0%, #0088ff 100%); }
         .team-leader .person-header-inline { flex-direction: column; text-align: center; }
         .team-leader .person-name { text-align: center; }
-        .pilots-grid { display: grid; grid-template-columns: repeat(3, 400px); gap: 20px; margin-bottom: 20px; justify-content: center; }
+        .pilots-grid { display: grid; grid-template-columns: repeat(3, 400px); gap: 20px; margin-bottom: 20px; justify-content: center;     align-items: stretch;
+        }
         .category-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
         .category-content.active { max-height: 15000px; }
         footer { background: rgba(10, 14, 39, 0.95); padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255, 26, 117, 0.2); }
@@ -318,6 +319,7 @@
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+            align-items: stretch;
         }
         
         .teams-columns-grid {
@@ -779,25 +781,25 @@
 
         /* ── Setup Modal ── */
         .setup-btn {
-            display: block;
-            width: calc(100% - 32px);
-            margin: 0 16px 16px;
-            background: linear-gradient(135deg, #ff1a75, #ff5da8);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 0;
-            font-size: 13px;
-            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            color: #ff1a75;
+            border: 1px solid rgba(255,26,117,0.4);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255,26,117,0.4);
+            transition: all 0.25s;
+            margin: 0 16px 14px;
         }
         .setup-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255,26,117,0.6);
+            background: rgba(255,26,117,0.1);
+            border-color: #ff1a75;
         }
         .setup-modal-overlay {
             display: none;
@@ -936,7 +938,6 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s1">S1</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-p3">P3</span></span>
 
-<button class="setup-btn" data-pilot="guillaume" onclick="openSetupModal('guillaume', 'Guillaume')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
@@ -959,7 +960,6 @@
 <span class="license-badge"><span class="lb-type">DR</span><span class="lb-level lb-s2">S2</span></span>
 <span class="license-badge"><span class="lb-type">SR</span><span class="lb-level lb-g3">G3</span></span>
 
-<button class="setup-btn" data-pilot="christophe-a" onclick="openSetupModal('christophe-a', 'Christophe.A')">🎮 Son Setup</button>
 </div>
 </div>
 </div>
