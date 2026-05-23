@@ -892,6 +892,28 @@
         }
         .pilot-popup-setup-photo:hover { opacity: 0.85; }
 
+        .lightbox-dots {
+            position: fixed;
+            bottom: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5001;
+        }
+        .lb-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .lb-dot.active {
+            background: #ff1a75;
+            transform: scale(1.3);
+        }
+
         @media (max-width: 768px) {
             .lightbox-arrow { width: 38px; height: 38px; font-size: 26px; }
             .lightbox-prev { left: 6px; }
@@ -1383,6 +1405,7 @@
         </div>
         <button class="lightbox-arrow lightbox-next" id="lightboxNext" onclick="lightboxNav(1)">&#8250;</button>
         <div class="lightbox-counter" id="lightboxCounter"></div>
+        <div class="lightbox-dots" id="lightboxDots"></div>
     </div>
 
 
@@ -1834,16 +1857,15 @@
         }
 
         // ── Lightbox ──
-        let _lbPhotos = [], _lbIndex = 0, _lbStartX = 0;
+        let _lbPhotos = [], _lbIndex = 0, _lbStartX = 0, _lbSwiped = false;
 
         function openLightbox(photos, index) {
             if (!photos || photos.length === 0) return;
-            // Ferme le popup pilote si ouvert
             document.getElementById('pilotPopupOverlay').classList.remove('active');
             document.body.style.overflow = 'hidden';
-
             _lbPhotos = photos;
             _lbIndex  = index;
+            _lbSwiped = false;
             _renderLightbox();
             document.getElementById('lightboxOverlay').classList.add('active');
         }
@@ -1858,9 +1880,24 @@
             img.src = _lbPhotos[_lbIndex];
             img.onload = () => { img.style.opacity = '1'; };
 
+            // Compteur texte
             counter.textContent = _lbPhotos.length > 1 ? `${_lbIndex + 1} / ${_lbPhotos.length}` : '';
+
+            // Flèches
             prev.classList.toggle('hidden', _lbPhotos.length <= 1 || _lbIndex === 0);
             next.classList.toggle('hidden', _lbPhotos.length <= 1 || _lbIndex === _lbPhotos.length - 1);
+
+            // Points de navigation mobile
+            const dotsEl = document.getElementById('lightboxDots');
+            dotsEl.innerHTML = '';
+            if (_lbPhotos.length > 1) {
+                _lbPhotos.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'lb-dot' + (i === _lbIndex ? ' active' : '');
+                    dot.addEventListener('click', e => { e.stopPropagation(); _lbIndex = i; _renderLightbox(); });
+                    dotsEl.appendChild(dot);
+                });
+            }
         }
 
         function lightboxNav(dir) {
@@ -1874,6 +1911,7 @@
         }
 
         function lightboxOutsideClick(e) {
+            if (_lbSwiped) { _lbSwiped = false; return; }
             if (e.target === document.getElementById('lightboxOverlay') ||
                 e.target === document.getElementById('lightboxImg')) {
                 closeLightbox();
@@ -1890,12 +1928,20 @@
         });
 
         // Swipe mobile
-        document.getElementById('lightboxOverlay').addEventListener('touchstart', e => {
+        const _lbEl = document.getElementById('lightboxOverlay');
+        _lbEl.addEventListener('touchstart', e => {
             _lbStartX = e.touches[0].clientX;
+            _lbSwiped = false;
         }, { passive: true });
-        document.getElementById('lightboxOverlay').addEventListener('touchend', e => {
+        _lbEl.addEventListener('touchmove', e => {
+            if (Math.abs(e.touches[0].clientX - _lbStartX) > 10) _lbSwiped = true;
+        }, { passive: true });
+        _lbEl.addEventListener('touchend', e => {
             const diff = _lbStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) lightboxNav(diff > 0 ? 1 : -1);
+            if (Math.abs(diff) > 40) {
+                _lbSwiped = true;
+                lightboxNav(diff > 0 ? 1 : -1);
+            }
         }, { passive: true });
 
         buildCardProfiles();
