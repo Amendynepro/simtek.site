@@ -767,8 +767,16 @@
     // ── Mobile accordion builder ──
     function buildAccordion() {
         const accordion = document.getElementById('mobileAccordion');
-        document.querySelectorAll('.setup-card').forEach(card => {
-            const name    = card.dataset.name;
+        const cards = Array.from(document.querySelectorAll('.setup-card'));
+
+        // Guillaume propriétaire (Guillaume.w) en premier
+        cards.sort((a, b) => {
+            if (a.dataset.name === 'Guillaume.w') return -1;
+            if (b.dataset.name === 'Guillaume.w') return 1;
+            return 0;
+        });
+
+        cards.forEach(card => {
             const color   = card.dataset.color || '#ff1a75';
             const photos  = JSON.parse(card.dataset.photos || '[]');
             const badge   = card.querySelector('.card-badge')?.textContent || '';
