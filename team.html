@@ -671,6 +671,28 @@
         /* Spacer between sections */
         .pilot-popup-spacer { height: 8px; }
 
+        /* Popup scrollable */
+        .pilot-popup { overflow-y: auto; max-height: 88vh; }
+
+        /* Setup photo inside popup */
+        .pilot-popup-setup-photo {
+            width: 100%;
+            max-height: 210px;
+            object-fit: cover;
+            display: block;
+        }
+        .pilot-popup-photo-label {
+            text-align: center;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            padding: 5px 0 2px;
+        }
+
+        /* Empty value on cards */
+        .spec-value.empty { color: rgba(255,255,255,0.3); font-style: italic; }
+
         /* ── License Badges (DR / SR) ── */
         .license-badges {
             display: flex;
@@ -1398,36 +1420,77 @@
         });
 
 
-        // ── Données pilotes & chefs d'équipe (à remplir quand ils transmettent leurs infos) ──
+        // ── Données pilotes & chefs d'équipe ──
         const pilotData = {
-            // Pilote GT3 Bravo & Ingénieur Technique
-            'Hugo.S':       { birthday: '11/05/2006', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'nurburgring nordschleife', car: 'Lexus LFA' },
+            // Direction
+            'Guillaume':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'Triple 27"' },
+            'Christophe.A': { birthday: '23/12/1991', simstart: '25 ans', platform: 'Le Mans Ultimate', circuit: 'Nordschleife', car: 'Ferrari F40', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
             // Chefs d'équipe
-            'Anthony.M':    { birthday: '09/04/1993', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'Bmw E46' },
-            'Romuald.D':    { birthday: '18/10/1979', simstart: '44 ans', platform: 'Le Mans Ultimate', circuit: 'nurburgring nordschleife', car: 'Porsche GT3 RS 992.2' },
-            'Guillaume.w':  { birthday: '19/01/1988', simstart: '32', platform: 'Le Mans Ultimate', circuit: 'Spa Francorchamps', car: 'Ferrari 333SP' },
-            'Hugo.R':       { birthday: '28/07/2010', simstart: '13 ans', platform: 'Le Mans Ultimate', circuit: 'Spa Francorchamps', car: 'McLaren Senna' },
+            'Romuald.D':    { birthday: '18/10/1979', simstart: '44 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche GT3 RS 992.2', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Anthony.M':    { birthday: '09/04/1993', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'BMW E46', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Guillaume.w':  { birthday: '19/01/1988', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'Ferrari 333SP', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            // Pilote GT3 Bravo & Ingénieur Technique
+            'Hugo.S':       { birthday: '11/05/2006', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Lexus LFA', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
             // Pilotes
-            'Thibault.C':   { birthday: '02/12/2000', simstart: '24 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Ford Fiste ST200' },
-            'Denis':        { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir' },
-            'Esteban.B':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir' },
-            'Maceo.R':      { birthday: '14/06/2007', simstart: '2025', platform: 'Le Mans Ultimate', circuit: 'Kyalami', car: 'Lancia 037' },
-            'Anthony.D':    { birthday: '03/12/1993', simstart: '30 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans Bugati', car: 'BMW M3 Compétition' },
-            'Paul.T':       { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir' },
-            'Maxime':       { birthday: '30/12/1991', simstart: 'mi 2023', platform: 'Le Mans Ultimate', circuit: 'Magny-Cours', car: 'Mercedes C63 AMG' },
-            'Clement':      { birthday: '21/12/1988', simstart: '35 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Porsche 922 Cup' },
-            'Christophe.A': { birthday: '23/12/1991', simstart: '25ans', platform: 'Le Mans Ultimate', circuit: 'Nordschleife', car: 'Ferrari F40' },
-            'Mathieu.D':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir' },
-            'Florent.L':    { birthday: '28/05/1993', simstart: '8 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans ', car: 'Aston Martin Vantage' },
-            'Cyrille':      { birthday: '27/03/1985', simstart: '39 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'Nissan Skyline R34' },
-            'Jacy.L':       { birthday: '25/01/2004', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'Jeddah', car: 'McLaren P1' },
-            'Enzo':         { birthday: '26/12/2003', simstart: '20 ans', platform: 'Le Mans Ultimate', circuit: 'nurburgring nordschleife', car: 'Porsche 992 GT3 RS' },
-
+            'Hugo.R':       { birthday: '28/07/2010', simstart: '13 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'McLaren Senna', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Thibault.C':   { birthday: '02/12/2000', simstart: '24 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Ford Fiesta ST200', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Denis':        { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Esteban.B':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Maceo.R':      { birthday: '14/06/2007', simstart: '2025', platform: 'Le Mans Ultimate', circuit: 'Kyalami', car: 'Lancia 037', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Anthony.D':    { birthday: '03/12/1993', simstart: '30 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans Bugatti', car: 'BMW M3 Compétition', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Paul.T':       { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Maxime':       { birthday: '30/12/1991', simstart: 'mi 2023', platform: 'Le Mans Ultimate', circuit: 'Magny-Cours', car: 'Mercedes C63 AMG', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Clement':      { birthday: '21/12/1988', simstart: '35 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Porsche 922 Cup', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Mathieu.D':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'À remplir', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Florent.L':    { birthday: '28/05/1993', simstart: '8 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans', car: 'Aston Martin Vantage', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Cyrille':      { birthday: '27/03/1985', simstart: '39 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'Nissan Skyline R34', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Jacy.L':       { birthday: '25/01/2004', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'Jeddah', car: 'McLaren P1', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Enzo':         { birthday: '26/12/2003', simstart: '20 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche 992 GT3 RS', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
         };
 
         function val(v) {
             const isEmpty = !v || v.trim() === 'À remplir' || v.trim() === '';
             return `<span class="pilot-popup-row-value${isEmpty ? ' empty' : ''}">${isEmpty ? 'À remplir' : v}</span>`;
+        }
+
+        // ── Build card profile display (replaces hardware specs on cards) ──
+        function buildCardProfiles() {
+            const PILOT_BADGES = ['PILOTE', 'CHEF', 'INGÉNIEUR TECHNIQUE', 'PROPRIÉTAIRE', 'TEAM PRINCIPAL'];
+            document.querySelectorAll('.person-card, .team-leader').forEach(card => {
+                const badgeEl = card.querySelector('.person-role-badge');
+                const badge = badgeEl ? badgeEl.textContent.trim() : '';
+                const isPilotOrChef = PILOT_BADGES.some(b => badge === b || badge.startsWith(b));
+                if (!isPilotOrChef) return;
+
+                const name = card.querySelector('.person-name')?.textContent.trim() || '';
+                const data = pilotData[name] || {};
+
+                // Store hardware specs as JSON in dataset before overwriting
+                const specs = {};
+                card.querySelectorAll('.spec-item').forEach(item => {
+                    const lbl = item.querySelector('.spec-label')?.textContent.trim();
+                    const spv = item.querySelector('.spec-value')?.textContent.trim();
+                    if (lbl) specs[lbl] = spv || '';
+                });
+                card.dataset.specs = JSON.stringify(specs);
+
+                // Build profile display
+                const details = card.querySelector('.person-info-details');
+                if (!details) return;
+                const isEmpty = v => !v || v.trim() === 'À remplir' || v.trim() === '';
+                const row = (icon, label, value) => `
+                    <div class="spec-item">
+                        <span class="spec-label">${icon} ${label}</span>
+                        <span class="spec-value${isEmpty(value) ? ' empty' : ''}">${isEmpty(value) ? 'À remplir' : value}</span>
+                    </div>`;
+
+                details.innerHTML = `<div class="person-specs">
+                    ${row('🎂', 'Anniversaire', data.birthday)}
+                    ${row('🕹️', 'Début sim', data.simstart)}
+                    ${row('📍', 'Circuit', data.circuit)}
+                    ${row('🚗', 'Voiture', data.car)}
+                </div>`;
+            });
         }
 
         function openPilotPopup(card, teamColor) {
@@ -1436,15 +1499,11 @@
             const badge  = card.querySelector('.person-role-badge')?.textContent.trim() || '';
             const data   = pilotData[name] || {};
 
-            // Specs matériel
-            const specs = {};
-            card.querySelectorAll('.spec-item').forEach(item => {
-                const lbl = item.querySelector('.spec-label')?.textContent.trim();
-                const spv = item.querySelector('.spec-value')?.textContent.trim();
-                if (lbl) specs[lbl] = spv || '';
-            });
+            // Read hardware specs from dataset (stored by buildCardProfiles)
+            let specs = {};
+            try { specs = JSON.parse(card.dataset.specs || '{}'); } catch(e) {}
 
-            // Setup photo (background-image du header)
+            // Setup photo from background-image
             const headerEl = card.querySelector('.person-header-inline');
             const bgStyle  = headerEl ? headerEl.style.backgroundImage : '';
             const setupSrc = bgStyle ? bgStyle.replace(/url\(['"]?(.*?)['"]?\)/, '$1') : '';
@@ -1467,35 +1526,12 @@
                     </div>
                 </div>
 
-                <div class="pilot-popup-section-title" style="color:${color};border-color:${color}33">🏎️ Profil</div>
-                <div class="pilot-popup-row">
-                    <span class="pilot-popup-row-icon">🎂</span>
-                    <span class="pilot-popup-row-label">Anniversaire</span>
-                    ${val(data.birthday)}
-                </div>
-                <div class="pilot-popup-row">
-                    <span class="pilot-popup-row-icon">🕹️</span>
-                    <span class="pilot-popup-row-label">Début sim</span>
-                    ${val(data.simstart)}
-                </div>
-                <div class="pilot-popup-row">
-                    <span class="pilot-popup-row-icon">💻</span>
-                    <span class="pilot-popup-row-label">Plateforme</span>
-                    ${val(data.platform)}
-                </div>
-                <div class="pilot-popup-row">
-                    <span class="pilot-popup-row-icon">📍</span>
-                    <span class="pilot-popup-row-label">Circuit</span>
-                    ${val(data.circuit)}
-                </div>
-                <div class="pilot-popup-row">
-                    <span class="pilot-popup-row-icon">🚗</span>
-                    <span class="pilot-popup-row-label">Voiture</span>
-                    ${val(data.car)}
-                </div>
+                ${hasSetup ? `
+                <img src="${setupSrc}" class="pilot-popup-setup-photo" alt="Setup de ${name}" onerror="this.style.display='none'">
+                ` : ''}
 
                 <div class="pilot-popup-spacer"></div>
-                <div class="pilot-popup-section-title" style="color:${color};border-color:${color}33">🖥️ Setup</div>
+                <div class="pilot-popup-section-title" style="color:${color};border-color:${color}33">🎮 Sim Racing</div>
                 <div class="pilot-popup-row">
                     <span class="pilot-popup-row-icon">⚙️</span>
                     <span class="pilot-popup-row-label">Base</span>
@@ -1515,6 +1551,39 @@
                     <span class="pilot-popup-row-icon">🪑</span>
                     <span class="pilot-popup-row-label">Châssis</span>
                     ${val(specs['Châssis'])}
+                </div>
+
+                <div class="pilot-popup-spacer"></div>
+                <div class="pilot-popup-section-title" style="color:${color};border-color:${color}33">🖥️ PC</div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">🔲</span>
+                    <span class="pilot-popup-row-label">CPU</span>
+                    ${val(data.cpu)}
+                </div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">🎴</span>
+                    <span class="pilot-popup-row-label">GPU</span>
+                    ${val(data.gpu)}
+                </div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">🔌</span>
+                    <span class="pilot-popup-row-label">Carte mère</span>
+                    ${val(data.motherboard)}
+                </div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">⚡</span>
+                    <span class="pilot-popup-row-label">Alimentation</span>
+                    ${val(data.psu)}
+                </div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">💾</span>
+                    <span class="pilot-popup-row-label">RAM</span>
+                    ${val(data.ram)}
+                </div>
+                <div class="pilot-popup-row">
+                    <span class="pilot-popup-row-icon">🖥️</span>
+                    <span class="pilot-popup-row-label">Écran</span>
+                    ${val(data.screen)}
                 </div>
                 <div class="pilot-popup-spacer"></div>
             `;
@@ -1563,7 +1632,7 @@
                     const accordionWrapper = document.createElement('div');
                     accordionWrapper.style.cssText = 'border: 2px solid rgba(255,255,255,0.4); border-radius: 12px; overflow: hidden; background: rgba(10,14,39,0.92);';
 
-                    // Mini header cliquable
+                    // Mini header cliquable → ouvre le popup pilote
                     const mini = document.createElement('div');
                     mini.className = 'mobile-mini-card';
                     mini.style.cssText = 'position:relative; top:auto; border:none; cursor:pointer; border-radius:0;';
@@ -1572,37 +1641,13 @@
                         <div style="flex:1">
                             <div class="mini-badge" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.5)">${badge}</div>
                             <div class="mini-name" style="color:#ffffff">${name}</div>
-                        </div>
-                        <span class="dir-arrow" style="color:#fff;font-size:16px;margin-right:8px">▼</span>`;
+                        </div>`;
 
-                    // Zone dépliable avec les specs
-                    const expandable = document.createElement('div');
-                    expandable.style.cssText = 'max-height: 0; overflow: hidden; transition: max-height 0.4s ease;';
-                    const specs = card.querySelector('.person-info-details');
-                    if (specs) {
-                        const specsClone = specs.cloneNode(true);
-                        specsClone.style.padding = '10px 15px';
-                        expandable.appendChild(specsClone);
-                    }
-
-                    let isOpen = false;
                     mini.addEventListener('click', () => {
-                        isOpen = !isOpen;
-                        expandable.style.maxHeight = isOpen ? '300px' : '0';
-                        mini.querySelector('.dir-arrow').textContent = isOpen ? '▲' : '▼';
+                        openPilotPopup(card, '#ff1a75');
                     });
 
-                    // Collapse au scroll
-                    window.addEventListener('scroll', () => {
-                        if (isOpen) {
-                            isOpen = false;
-                            expandable.style.maxHeight = '0';
-                            mini.querySelector('.dir-arrow').textContent = '▼';
-                        }
-                    }, { passive: true });
-
                     accordionWrapper.appendChild(mini);
-                    accordionWrapper.appendChild(expandable);
                     dirWrapper.appendChild(accordionWrapper);
                 });
                 section.appendChild(dirWrapper);
@@ -1673,6 +1718,15 @@
                 section.appendChild(folder);
             });
         }
+
+        buildCardProfiles();
+
+        // Click handlers for directors grid (Guillaume, Christophe.A)
+        document.querySelectorAll('.directors-grid .person-card').forEach(card => {
+            card.addEventListener('click', function() {
+                openPilotPopup(this, '#ff1a75');
+            });
+        });
 
         buildMobileView();
     </script>
