@@ -31,7 +31,14 @@
 
   <url>
     <loc>https://www.simtekperformance.com/team.html</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simtekperformance.com/our-setups.html</loc>
+    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
