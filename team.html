@@ -798,6 +798,106 @@
             .internal-links-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
         }
 
+        /* ── Lightbox ── */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .lightbox-overlay.active { display: flex; }
+
+        .lightbox-img-wrapper {
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            cursor: zoom-out;
+            transition: opacity 0.2s ease;
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,26,117,0.2);
+            border: 1px solid rgba(255,26,117,0.5);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5001;
+            transition: background 0.2s;
+        }
+        .lightbox-close:hover { background: rgba(255,26,117,0.5); }
+
+        .lightbox-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5001;
+            transition: background 0.2s;
+            line-height: 1;
+        }
+        .lightbox-arrow:hover { background: rgba(255,255,255,0.25); }
+        .lightbox-arrow.hidden { display: none; }
+        .lightbox-prev { left: 14px; }
+        .lightbox-next { right: 14px; }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 14px;
+            border-radius: 20px;
+        }
+
+        /* Photo popup cliquable */
+        .pilot-popup-setup-photo {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .pilot-popup-setup-photo:hover { opacity: 0.85; }
+
+        @media (max-width: 768px) {
+            .lightbox-arrow { width: 38px; height: 38px; font-size: 26px; }
+            .lightbox-prev { left: 6px; }
+            .lightbox-next { right: 6px; }
+        }
+
     </style>
 </head>
 
@@ -1252,6 +1352,17 @@
         </div>
     </div>
 
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="lightboxOutsideClick(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" onclick="lightboxNav(-1)">&#8249;</button>
+        <div class="lightbox-img-wrapper">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="Setup">
+        </div>
+        <button class="lightbox-arrow lightbox-next" id="lightboxNext" onclick="lightboxNav(1)">&#8250;</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
 
     <section class="internal-links">
         <h2>Découvrir SimTek Performance</h2>
@@ -1401,24 +1512,24 @@
         // ── Données pilotes & chefs d'équipe ──
         const pilotData = {
             // Direction
-            'Guillaume':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'Ryzen 7 5800X', gpu: 'Double RTX 4070 Super', motherboard: 'Aorus X570 Elite WiFi', psu: 'Corsair RM1000', ram: '64Go Corsair Vengeance', screen: '3x 27" 2.5K 144Hz + 3x Asus 27" 4K' },
-            'Christophe.A': { birthday: '23/12/1991', simstart: '25 ans', platform: 'Le Mans Ultimate', circuit: 'Nordschleife', car: 'Ferrari F40', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
+            'Guillaume':    { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'Ryzen 7 5800X', gpu: 'Double RTX 4070 Super', motherboard: 'Aorus X570 Elite WiFi', psu: 'Corsair RM1000', ram: '64Go Corsair Vengeance', screen: '3x 27" 2.5K 144Hz + 3x Asus 27" 4K', photos: ['setup-guillaume.webp'] },
+            'Christophe.A': { birthday: '23/12/1991', simstart: '25 ans', platform: 'Le Mans Ultimate', circuit: 'Nordschleife', car: 'Ferrari F40', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir', photos: [] },
             // Chefs d'équipe
-            'Romuald.D':    { birthday: '18/10/1979', simstart: '44 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche GT3 RS 992.2', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
-            'Anthony.M':    { birthday: '09/04/1993', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'BMW E46', cpu: 'Intel 13900KF', gpu: 'RTX 5090', motherboard: 'Asus ROG Maximus Z790 Hero', psu: 'NZXT 1500W', ram: '62Go Corsair Platinium DDR5', screen: 'Sony Bravia XR 65" OLED' },
-            'Guillaume.w':  { birthday: '19/01/1988', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'Ferrari 333SP', cpu: 'Ryzen 7 5800X', gpu: 'Double RTX 4070 Super', motherboard: 'Aorus X570 Elite WiFi', psu: 'Corsair RM1000', ram: '64Go Corsair Vengeance', screen: '3x 27" 2.5K 144Hz + 3x Asus 27" 4K' },
+            'Romuald.D':    { birthday: '18/10/1979', simstart: '44 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche GT3 RS 992.2', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir', photos: [] },
+            'Anthony.M':    { birthday: '09/04/1993', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'BMW E46', cpu: 'Intel 13900KF', gpu: 'RTX 5090', motherboard: 'Asus ROG Maximus Z790 Hero', psu: 'NZXT 1500W', ram: '62Go Corsair Platinium DDR5', screen: 'Sony Bravia XR 65" OLED', photos: ['setup-anthony-m.webp'] },
+            'Guillaume.w':  { birthday: '19/01/1988', simstart: '32 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'Ferrari 333SP', cpu: 'Ryzen 7 5800X', gpu: 'Double RTX 4070 Super', motherboard: 'Aorus X570 Elite WiFi', psu: 'Corsair RM1000', ram: '64Go Corsair Vengeance', screen: '3x 27" 2.5K 144Hz + 3x Asus 27" 4K', photos: ['setup-guillaume.webp'] },
             // Pilote GT3 Bravo & Ingénieur Technique
-            'Hugo.S':       { birthday: '11/05/2006', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Lexus LFA', cpu: 'Ryzen 7 5800X', gpu: 'Sapphire RX 6800 XT NITRO+', motherboard: 'Gigabyte B550 Aorus Elite AX V2', psu: 'Cooler Master MWE 750W Bronze', ram: '32Go Corsair Dominator Platinum RGB 3600MHz', screen: 'Acer' },
+            'Hugo.S':       { birthday: '11/05/2006', simstart: '15 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Lexus LFA', cpu: 'Ryzen 7 5800X', gpu: 'Sapphire RX 6800 XT NITRO+', motherboard: 'Gigabyte B550 Aorus Elite AX V2', psu: 'Cooler Master MWE 750W Bronze', ram: '32Go Corsair Dominator Platinum RGB 3600MHz', screen: 'Acer', photos: ['setup-hugo.webp'] },
             // Pilotes
-            'Hugo.R':       { birthday: '28/07/2010', simstart: '13 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'McLaren Senna', cpu: 'Ryzen 7 5800X', gpu: 'AMD Radeon RX 6800 16Go', motherboard: 'MSI B450 Tomahawk', psu: 'Corsair RM850', ram: '32Go Corsair Vengeance', screen: '2x 24" 2.5K 120Hz' },
-            'Thibault.C':   { birthday: '02/12/2000', simstart: '24 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Ford Fiesta ST200', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
-            'Denis':        { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
-            'Maceo.R':      { birthday: '14/06/2007', simstart: '2025', platform: 'Le Mans Ultimate', circuit: 'Kyalami', car: 'Lancia 037', cpu: 'AMD Ryzen 5 7500F', gpu: 'AMD Radeon RX 9060 XT 8Go', motherboard: 'MSI Pro B840M-B DDR5', psu: 'Xigmatek Thor T750 V2 80+ Bronze', ram: '16Go DDR5 Corsair', screen: 'Samsung Odyssey G5 34"' },
-            'Anthony.D':    { birthday: '03/12/1993', simstart: '30 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans Bugatti', car: 'BMW M3 Compétition', cpu: 'Intel Core i5 14600K', gpu: 'Nvidia RTX 5070 12Go', motherboard: 'À remplir', psu: 'MAG A750GL 750W 80+ Gold', ram: 'DDR5 32Go', screen: 'Kooruii 34"' },
-            'Maxime':       { birthday: '30/12/1991', simstart: 'mi 2023', platform: 'Le Mans Ultimate', circuit: 'Magny-Cours', car: 'Mercedes C63 AMG', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir' },
-            'Florent.L':    { birthday: '28/05/1993', simstart: '8 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans', car: 'Aston Martin Vantage', cpu: 'AMD Ryzen 7 9800X3D', gpu: 'AMD Radeon RX 9070 XT', motherboard: 'À remplir', psu: 'À remplir', ram: '32Go', screen: 'Samsung G9x 3840x1080 144Hz' },
-            'Cyrille':      { birthday: '27/03/1985', simstart: '39 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'Nissan Skyline R34', cpu: 'AMD Ryzen 7 770X', gpu: 'RX 7600 XFX 8Go', motherboard: 'MSI B650 Gaming Plus WiFi', psu: 'Be Quiet 750W Gold', ram: '64Go Corsair DDR5 6000MHz CL30', screen: 'Samsung Odyssey G4 27"' },
-            'Enzo':         { birthday: '26/12/2003', simstart: '20 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche 992 GT3 RS', cpu: 'AMD 7800X3D', gpu: 'Nvidia RTX 5080', motherboard: 'MSI B850 Gaming Plus', psu: 'Corsair RM1000e 80+ Gold', ram: '34Go Kingston Fury DDR5', screen: 'Samsung' },
+            'Hugo.R':       { birthday: '28/07/2010', simstart: '13 ans', platform: 'Le Mans Ultimate', circuit: 'Spa-Francorchamps', car: 'McLaren Senna', cpu: 'Ryzen 7 5800X', gpu: 'AMD Radeon RX 6800 16Go', motherboard: 'MSI B450 Tomahawk', psu: 'Corsair RM850', ram: '32Go Corsair Vengeance', screen: '2x 24" 2.5K 120Hz', photos: [] },
+            'Thibault.C':   { birthday: '02/12/2000', simstart: '24 ans', platform: 'Le Mans Ultimate', circuit: 'La Sarthe', car: 'Ford Fiesta ST200', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir', photos: [] },
+            'Denis':        { birthday: 'À remplir', simstart: 'À remplir', platform: 'Le Mans Ultimate', circuit: 'À remplir', car: 'À remplir', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir', photos: [] },
+            'Maceo.R':      { birthday: '14/06/2007', simstart: '2025', platform: 'Le Mans Ultimate', circuit: 'Kyalami', car: 'Lancia 037', cpu: 'AMD Ryzen 5 7500F', gpu: 'AMD Radeon RX 9060 XT 8Go', motherboard: 'MSI Pro B840M-B DDR5', psu: 'Xigmatek Thor T750 V2 80+ Bronze', ram: '16Go DDR5 Corsair', screen: 'Samsung Odyssey G5 34"', photos: [] },
+            'Anthony.D':    { birthday: '03/12/1993', simstart: '30 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans Bugatti', car: 'BMW M3 Compétition', cpu: 'Intel Core i5 14600K', gpu: 'Nvidia RTX 5070 12Go', motherboard: 'À remplir', psu: 'MAG A750GL 750W 80+ Gold', ram: 'DDR5 32Go', screen: 'Kooruii 34"', photos: ['setup-anthony-d.webp'] },
+            'Maxime':       { birthday: '30/12/1991', simstart: 'mi 2023', platform: 'Le Mans Ultimate', circuit: 'Magny-Cours', car: 'Mercedes C63 AMG', cpu: 'À remplir', gpu: 'À remplir', motherboard: 'À remplir', psu: 'À remplir', ram: 'À remplir', screen: 'À remplir', photos: [] },
+            'Florent.L':    { birthday: '28/05/1993', simstart: '8 ans', platform: 'Le Mans Ultimate', circuit: 'Le Mans', car: 'Aston Martin Vantage', cpu: 'AMD Ryzen 7 9800X3D', gpu: 'AMD Radeon RX 9070 XT', motherboard: 'À remplir', psu: 'À remplir', ram: '32Go', screen: 'Samsung G9x 3840x1080 144Hz', photos: ['setup-florent-l.webp'] },
+            'Cyrille':      { birthday: '27/03/1985', simstart: '39 ans', platform: 'Le Mans Ultimate', circuit: 'Paul Ricard', car: 'Nissan Skyline R34', cpu: 'AMD Ryzen 7 770X', gpu: 'RX 7600 XFX 8Go', motherboard: 'MSI B650 Gaming Plus WiFi', psu: 'Be Quiet 750W Gold', ram: '64Go Corsair DDR5 6000MHz CL30', screen: 'Samsung Odyssey G4 27"', photos: ['setup-cyrille.webp'] },
+            'Enzo':         { birthday: '26/12/2003', simstart: '20 ans', platform: 'Le Mans Ultimate', circuit: 'Nürburgring Nordschleife', car: 'Porsche 992 GT3 RS', cpu: 'AMD 7800X3D', gpu: 'Nvidia RTX 5080', motherboard: 'MSI B850 Gaming Plus', psu: 'Corsair RM1000e 80+ Gold', ram: '34Go Kingston Fury DDR5', screen: 'Samsung', photos: ['setup-enzo.webp'] },
         };
 
         function val(v) {
@@ -1500,7 +1611,9 @@
                 </div>
 
                 ${hasSetup ? `
-                <img src="${setupSrc}" class="pilot-popup-setup-photo" alt="Setup de ${name}" onerror="this.style.display='none'">
+                <img src="${setupSrc}" class="pilot-popup-setup-photo" alt="Setup de ${name}"
+                    onclick="openLightbox(${JSON.stringify(data.photos && data.photos.length ? data.photos : [setupSrc])}, 0)"
+                    onerror="this.style.display='none'">
                 ` : ''}
 
                 <div class="pilot-popup-spacer"></div>
@@ -1691,6 +1804,71 @@
                 section.appendChild(folder);
             });
         }
+
+        // ── Lightbox ──
+        let _lbPhotos = [], _lbIndex = 0, _lbStartX = 0;
+
+        function openLightbox(photos, index) {
+            if (!photos || photos.length === 0) return;
+            // Ferme le popup pilote si ouvert
+            document.getElementById('pilotPopupOverlay').classList.remove('active');
+            document.body.style.overflow = 'hidden';
+
+            _lbPhotos = photos;
+            _lbIndex  = index;
+            _renderLightbox();
+            document.getElementById('lightboxOverlay').classList.add('active');
+        }
+
+        function _renderLightbox() {
+            const img     = document.getElementById('lightboxImg');
+            const counter = document.getElementById('lightboxCounter');
+            const prev    = document.getElementById('lightboxPrev');
+            const next    = document.getElementById('lightboxNext');
+
+            img.style.opacity = '0';
+            img.src = _lbPhotos[_lbIndex];
+            img.onload = () => { img.style.opacity = '1'; };
+
+            counter.textContent = _lbPhotos.length > 1 ? `${_lbIndex + 1} / ${_lbPhotos.length}` : '';
+            prev.classList.toggle('hidden', _lbPhotos.length <= 1 || _lbIndex === 0);
+            next.classList.toggle('hidden', _lbPhotos.length <= 1 || _lbIndex === _lbPhotos.length - 1);
+        }
+
+        function lightboxNav(dir) {
+            _lbIndex = Math.max(0, Math.min(_lbPhotos.length - 1, _lbIndex + dir));
+            _renderLightbox();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function lightboxOutsideClick(e) {
+            if (e.target === document.getElementById('lightboxOverlay') ||
+                e.target === document.getElementById('lightboxImg')) {
+                closeLightbox();
+            }
+        }
+
+        // Clavier
+        document.addEventListener('keydown', e => {
+            const lb = document.getElementById('lightboxOverlay');
+            if (!lb.classList.contains('active')) return;
+            if (e.key === 'Escape')      closeLightbox();
+            if (e.key === 'ArrowLeft')   lightboxNav(-1);
+            if (e.key === 'ArrowRight')  lightboxNav(1);
+        });
+
+        // Swipe mobile
+        document.getElementById('lightboxOverlay').addEventListener('touchstart', e => {
+            _lbStartX = e.touches[0].clientX;
+        }, { passive: true });
+        document.getElementById('lightboxOverlay').addEventListener('touchend', e => {
+            const diff = _lbStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) lightboxNav(diff > 0 ? 1 : -1);
+        }, { passive: true });
 
         buildCardProfiles();
 
