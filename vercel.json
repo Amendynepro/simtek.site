@@ -1,37 +1,24 @@
 {
   "redirects": [
     {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/planning.html",
       "destination": "/#planning",
       "permanent": true
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*\\.webp|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.gif|.*\\.ico|.*\\.svg)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
     },
     {
-      "source": "/(.*\\.css|.*\\.js)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000" }
-      ]
+      "source": "/planning",
+      "destination": "/#planning",
+      "permanent": true
     },
     {
-      "source": "/(.*\\.html)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
+      "source": "/rejoins-nous.html",
+      "destination": "/pilot-recruitment.html",
+      "permanent": true
+    },
+    {
+      "source": "/rejoins-nous",
+      "destination": "/pilot-recruitment.html",
+      "permanent": true
     }
   ]
 }
