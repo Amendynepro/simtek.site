@@ -9,6 +9,9 @@
       gtag('config', 'G-CB6CLV56G3');
     </script>
     <link rel="preload" href="Logo_SIMTEK.webp" as="image" fetchpriority="high">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js">
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Actualités de SimTek Performance, team esport professionnelle sur Le Mans Ultimate : résultats LMU, guides et analyses championnats simracing France.">
@@ -107,7 +110,8 @@
     </script>
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%); color: #fff; line-height: 1.6; min-height: 100vh; }
@@ -268,7 +272,7 @@
                         <button class="like-btn" data-id="nascar-cocacola600" data-base="0"><span class="thumb">👍</span><span class="like-count">0</span></button>
                     </div>
                 </div>
-                <img height="450" width="800" loading="lazy" src="nascar-cocacola600.webp" alt="Daniel Suárez vainqueur Coca-Cola 600 Charlotte 2026 — Spire Motorsports" class="article-cover" onerror="this.style.display='none'">
+                <img fetchpriority="high" height="450" width="800"  src="nascar-cocacola600.webp" alt="Daniel Suárez vainqueur Coca-Cola 600 Charlotte 2026 — Spire Motorsports" class="article-cover" onerror="this.style.display='none'">
                 <p class="article-excerpt">Cinq jours après la mort de Kyle Busch, le Coca-Cola 600 de Charlotte s'est couru sous le signe du deuil. Daniel Suárez, grâce à un pari stratégique sur deux pneus et une pluie providentielle, s'impose pour la première fois dans l'épreuve la plus longue du calendrier NASCAR — et la dédie à celui qui a changé sa carrière.</p>
                 <button class="article-toggle" onclick="toggleArticle('nascar-cocacola600', this)">Lire l'article ▼</button>
                 <div class="article-full" id="full-nascar-cocacola600">
